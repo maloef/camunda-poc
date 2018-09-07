@@ -5,9 +5,19 @@
 package ch.sbb.dks.camundapoc;
 
 
+import java.util.Arrays;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
+
+import ch.sbb.dks.camundapoc.dynamodb.model.WagenEvent;
+import ch.sbb.dks.camundapoc.dynamodb.read.DynamoReader;
+import ch.sbb.dks.camundapoc.mariadb.write.MariaWriter;
 
 /**
  * Spring boot config for the application.
@@ -18,7 +28,24 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class CamundaPocApp {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(CamundaPocApp.class);
+
     public static void main(String[] args) {
-        SpringApplication.run(CamundaPocApp.class, args);
+        ConfigurableApplicationContext context = SpringApplication.run(CamundaPocApp.class, args);
+
+        List<String> wagennummern = Arrays.asList("338593262375", "275544320854", "318046740417", "318567332610", "338135460362");
+
+        DynamoReader dynamoReader = context.getBean(DynamoReader.class);
+        List<WagenEvent> events = dynamoReader.findByWagennummern(wagennummern);
+
+        LOGGER.info("found {} events for wagen {}", events.size(), wagennummern);
+
+//        DynamoReader testReader = new DynamoReader("EventStoreCargo_Poc");
+//        events.stream().forEach(event -> testReader.write(event));
+
+        MariaWriter mariaWriter = context.getBean(MariaWriter.class);
+        mariaWriter.write(events);
+
+
     }
 }
