@@ -1,5 +1,5 @@
 spring:
   application:
-    name: cargo-storage
+    name: camunda-poc
   profiles:
     active: ${ESTA_CLOUDPROFILES_ACTIVE:local}

@@ -11,7 +11,7 @@ spring:
 # use /v1/actuator/info to access these values
 info:
   app:
-    name: cargo-storage
+    name: camunda-poc
     version: '@version@'
     buildtime: '@timestamp@'
 
