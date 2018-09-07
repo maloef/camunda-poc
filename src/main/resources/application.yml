@@ -1,0 +1,23 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /v1
+
+spring:
+  sleuth:
+    sampler:
+      probability: 0.01 # to avoid that sleuth drops measures
+
+# use /v1/actuator/info to access these values
+info:
+  app:
+    name: cargo-storage
+    version: '@version@'
+    buildtime: '@timestamp@'
+
+logging:
+  level:
+    org.springframework.cloud: 'INFO'
+
+
+

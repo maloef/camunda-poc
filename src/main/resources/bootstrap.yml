@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: cargo-storage
+  profiles:
+    active: ${ESTA_CLOUDPROFILES_ACTIVE:local}

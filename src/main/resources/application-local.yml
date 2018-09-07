@@ -1,0 +1,24 @@
+ibm:
+  mq:
+    queue-manager: IN102D
+    channel: IN102D.SVRCONN.001
+    connName: in102d.sbb.ch(1502) # aka hostname
+    user: asrun
+
+cargostorage:
+  jms:
+    destination: NWML.CIS1.PZSTAT.R
+
+dynamodb:
+  localInstance: true
+  table: EventStoreCargo_Local
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create
+  datasource:
+    url: jdbc:mysql://localhost:3306/camunda_poc
+    username: cargostorage
+    password: cargostorage
+
