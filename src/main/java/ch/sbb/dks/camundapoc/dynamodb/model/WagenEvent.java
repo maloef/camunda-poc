@@ -4,9 +4,6 @@
 package ch.sbb.dks.camundapoc.dynamodb.model;
 
 import java.time.Instant;
-import java.util.Date;
-
-import org.springframework.context.annotation.Configuration;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIgnore;
