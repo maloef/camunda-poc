@@ -15,4 +15,4 @@ server.port: 8080
 
 dynamodb:
   localInstance: false
-  table: EventStoreCargo_Dev
+  table: EventStoreCargo_Poc

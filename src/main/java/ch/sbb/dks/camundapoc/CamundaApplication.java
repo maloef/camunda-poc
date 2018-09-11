@@ -25,8 +25,8 @@ public class CamundaApplication {
         List<String> wagennummern = Arrays.asList("338593262375", "275544320854", "318046740417", "318567332610", "338135460362");
 
         DynamoReader dynamoReader = applicationContext.getBean(DynamoReader.class);
-        List<WagenEvent> events = dynamoReader.findByWagennummern(wagennummern);
+        List<WagenEvent> events = dynamoReader.findByZkkNummer("45015133");
 
-        LOGGER.info("found {} events for wagen {}", events.size(), wagennummern);
+        LOGGER.info("found {} events", events.size());
     }
 }

@@ -3,6 +3,7 @@
  */
 package ch.sbb.dks.camundapoc.dynamodb.read;
 
+import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -17,6 +18,8 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.document.Index;
 import com.amazonaws.services.dynamodbv2.document.Item;
@@ -58,22 +61,39 @@ public class DynamoReader {
         return tableDescription.getItemCount();
     }
 
-    public List<WagenEvent> findByPartner(String partnernummer) {
-        Index index = dynamoDB.getTable(tableName).getIndex("partnernummer-messageReceivedTimestamp-index");
+    public List<WagenEvent> findByZkkNummer(String zkkNummer) {
+        int len = zkkNummer.length();
+        String filalcode = zkkNummer.substring(len - 2, len);
+        String partnernummer = zkkNummer.substring(0, len - 2);
 
-        QuerySpec spec = new QuerySpec()
-                .withKeyConditionExpression("partnernummer = :p")
-                .withValueMap(new ValueMap().withString(":p",partnernummer));
+        Map<String, AttributeValue> eav = new HashMap<String, AttributeValue>();
+        eav.put(":p", new AttributeValue().withS(partnernummer));
+        eav.put(":f", new AttributeValue().withS(filalcode));
 
-        ItemCollection<QueryOutcome> items = index.query(spec);
-        LOGGER.info("items with partnernummer {}: {}", partnernummer, items.getAccumulatedItemCount());
-        Iterator<Item> iter = items.iterator();
+        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+                .withFilterExpression("partnernummer = :p and filialcode = :f")
+                .withExpressionAttributeValues(eav);
 
-        List<WagenEvent> events = new ArrayList<>();
-        while (iter.hasNext()) {
-            Item next = iter.next();
-            LOGGER.info("next item: {}", items);
-        }
+        List<WagenEvent> events = dynamoDBMapper.scan(WagenEvent.class, scanExpression);
+
+//        List<Reply> latestReplies = mapper.query(Reply.class, queryExpression);
+//
+//        Index index = dynamoDB.getTable(tableName).getIndex("partnernummer-messageReceivedTimestamp-index");
+//
+//        QuerySpec spec = new QuerySpec()
+//                .withKeyConditionExpression("partnernummer = :p")
+//                .withValueMap(new ValueMap().withString(":p",partnernummer));
+//
+//        ItemCollection<QueryOutcome> items = index.query(spec);
+//        LOGGER.info("items with partnernummer {}: {}", partnernummer, items.getAccumulatedItemCount());
+//        Iterator<Item> iter = items.iterator();
+//
+//        List<WagenEvent> events = new ArrayList<>();
+//        while (iter.hasNext()) {
+//            Item item = iter.next();
+//            item.
+//            LOGGER.info("next item: {}", event);
+//        }
         return events;
     }
 
