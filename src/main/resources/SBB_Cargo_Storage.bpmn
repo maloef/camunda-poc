@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_1lbu1tm" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.0.0">
+  <bpmn:process id="Process_1" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="Rechnungsanfrage für Kunde">
+      <bpmn:outgoing>SequenceFlow_0a7zjt2</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0a7zjt2" sourceRef="StartEvent_1" targetRef="Task_11mopfo" />
+    <bpmn:sequenceFlow id="SequenceFlow_08o66lp" sourceRef="Task_11mopfo" targetRef="Task_0l4gsfg" />
+    <bpmn:sequenceFlow id="SequenceFlow_11cryg3" sourceRef="Task_0whsmau" targetRef="Task_1ij908w" />
+    <bpmn:sequenceFlow id="SequenceFlow_0nuygel" sourceRef="Task_1ij908w" targetRef="Task_0el1l44" />
+    <bpmn:endEvent id="EndEvent_1lud4hl" name="Preis bestimmt">
+      <bpmn:incoming>SequenceFlow_0u4w89k</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0u4w89k" sourceRef="Task_0el1l44" targetRef="EndEvent_1lud4hl" />
+    <bpmn:serviceTask id="Task_11mopfo" name="Wagenbewegungen beziehen">
+      <bpmn:incoming>SequenceFlow_0a7zjt2</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_08o66lp</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_08rnj0a" sourceRef="Task_0l4gsfg" targetRef="Task_0whsmau" />
+    <bpmn:serviceTask id="Task_0l4gsfg" name="Einheiten bestimmen pro Wagenbewegungsblock">
+      <bpmn:incoming>SequenceFlow_08o66lp</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_08rnj0a</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_0whsmau" name="Wagenpositionen bestimmen">
+      <bpmn:incoming>SequenceFlow_08rnj0a</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_11cryg3</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_1ij908w" name="Einheiten pro Position berechnen">
+      <bpmn:incoming>SequenceFlow_11cryg3</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0nuygel</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_0el1l44" name="Preis pro Position berechnen">
+      <bpmn:incoming>SequenceFlow_0nuygel</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0u4w89k</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:textAnnotation id="TextAnnotation_09pnrbu">
+      <bpmn:text>in dem ausgewählten Zeitraum</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_0eombl0" sourceRef="Task_11mopfo" targetRef="TextAnnotation_09pnrbu" />
+    <bpmn:textAnnotation id="TextAnnotation_1e7yx8l">
+      <bpmn:text>Kunde
+Zeitraum</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_0u5pw5z" sourceRef="StartEvent_1" targetRef="TextAnnotation_1e7yx8l" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="223" y="254" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="201" y="297" width="81" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0a7zjt2_di" bpmnElement="SequenceFlow_0a7zjt2">
+        <di:waypoint x="259" y="272" />
+        <di:waypoint x="309" y="272" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_09pnrbu_di" bpmnElement="TextAnnotation_09pnrbu">
+        <dc:Bounds x="409" y="152" width="235" height="54.373522458628834" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_0eombl0_di" bpmnElement="Association_0eombl0">
+        <di:waypoint x="409" y="244" />
+        <di:waypoint x="478" y="206" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_08o66lp_di" bpmnElement="SequenceFlow_08o66lp">
+        <di:waypoint x="409" y="272" />
+        <di:waypoint x="451" y="272" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_11cryg3_di" bpmnElement="SequenceFlow_11cryg3">
+        <di:waypoint x="694" y="272" />
+        <di:waypoint x="744" y="272" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0nuygel_di" bpmnElement="SequenceFlow_0nuygel">
+        <di:waypoint x="844" y="272" />
+        <di:waypoint x="894" y="272" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_1lud4hl_di" bpmnElement="EndEvent_1lud4hl">
+        <dc:Bounds x="1044" y="254" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1025" y="297" width="74" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0u4w89k_di" bpmnElement="SequenceFlow_0u4w89k">
+        <di:waypoint x="994" y="272" />
+        <di:waypoint x="1044" y="272" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_1ro27md_di" bpmnElement="Task_11mopfo">
+        <dc:Bounds x="309" y="232" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_08rnj0a_di" bpmnElement="SequenceFlow_08rnj0a">
+        <di:waypoint x="551" y="272" />
+        <di:waypoint x="594" y="272" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_1e7yx8l_di" bpmnElement="TextAnnotation_1e7yx8l">
+        <dc:Bounds x="259" y="174" width="99.99656781987919" height="40.637012630422845" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_0u5pw5z_di" bpmnElement="Association_0u5pw5z">
+        <di:waypoint x="253" y="259" />
+        <di:waypoint x="291" y="215" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_0gahkjd_di" bpmnElement="Task_0l4gsfg">
+        <dc:Bounds x="451" y="232" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_05uyemz_di" bpmnElement="Task_0whsmau">
+        <dc:Bounds x="594" y="232" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_0g4nqw3_di" bpmnElement="Task_1ij908w">
+        <dc:Bounds x="744" y="232" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_1qkxnw4_di" bpmnElement="Task_0el1l44">
+        <dc:Bounds x="894" y="232" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
