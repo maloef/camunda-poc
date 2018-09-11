@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_1lbu1tm" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.0.0">
-  <bpmn:process id="Process_1" isExecutable="true">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1lbu1tm" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.0.0">
+  <bpmn:process id="Preisberechnung" name="Preisberechnung" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1" name="Rechnungsanfrage für Kunde">
       <bpmn:outgoing>SequenceFlow_0a7zjt2</bpmn:outgoing>
     </bpmn:startEvent>
@@ -12,24 +12,24 @@
       <bpmn:incoming>SequenceFlow_0u4w89k</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_0u4w89k" sourceRef="Task_0el1l44" targetRef="EndEvent_1lud4hl" />
-    <bpmn:serviceTask id="Task_11mopfo" name="Wagenbewegungen beziehen">
+    <bpmn:serviceTask id="Task_11mopfo" name="Wagenbewegungen beziehen" camunda:delegateExpression="${logger}">
       <bpmn:incoming>SequenceFlow_0a7zjt2</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_08o66lp</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="SequenceFlow_08rnj0a" sourceRef="Task_0l4gsfg" targetRef="Task_0whsmau" />
-    <bpmn:serviceTask id="Task_0l4gsfg" name="Einheiten bestimmen pro Wagenbewegungsblock">
+    <bpmn:serviceTask id="Task_0l4gsfg" name="Einheiten bestimmen pro Wagenbewegungsblock" camunda:delegateExpression="${logger}">
       <bpmn:incoming>SequenceFlow_08o66lp</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_08rnj0a</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="Task_0whsmau" name="Wagenpositionen bestimmen">
+    <bpmn:serviceTask id="Task_0whsmau" name="Wagenpositionen bestimmen" camunda:delegateExpression="${logger}">
       <bpmn:incoming>SequenceFlow_08rnj0a</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_11cryg3</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="Task_1ij908w" name="Einheiten pro Position berechnen">
+    <bpmn:serviceTask id="Task_1ij908w" name="Einheiten pro Position berechnen" camunda:delegateExpression="${logger}">
       <bpmn:incoming>SequenceFlow_11cryg3</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0nuygel</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="Task_0el1l44" name="Preis pro Position berechnen">
+    <bpmn:serviceTask id="Task_0el1l44" name="Preis pro Position berechnen" camunda:delegateExpression="${logger}">
       <bpmn:incoming>SequenceFlow_0nuygel</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0u4w89k</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -44,7 +44,7 @@ Zeitraum</bpmn:text>
     <bpmn:association id="Association_0u5pw5z" sourceRef="StartEvent_1" targetRef="TextAnnotation_1e7yx8l" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Preisberechnung">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="223" y="254" width="36" height="36" />
         <bpmndi:BPMNLabel>
