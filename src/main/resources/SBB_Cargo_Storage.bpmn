@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1lbu1tm" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.0.0">
   <bpmn:process id="Preisberechnung" name="Preisberechnung" isExecutable="true">
+    <bpmn:documentation>test</bpmn:documentation>
     <bpmn:startEvent id="StartEvent_1" name="Rechnungsanfrage für Kunde">
       <bpmn:extensionElements>
         <camunda:formData>
