@@ -3,6 +3,7 @@
  */
 package ch.sbb.dks.camundapoc.model;
 
+import java.io.Serializable;
 import java.time.Instant;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
@@ -24,12 +25,12 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
  * </ul>
  *
  * The tableName attribute is left empty here because we want to use different table names for different environments (e.g. EventStoreCargo, EventStoreCargo_Test,
- * EventStoreCargo_Dev). The table name is set at runtime in the class {@link ch.sbb.dks.cargostorage.config.DynamoDBConfig}.
+ * EventStoreCargo_Dev). The table name is set at runtime in the class {@link ch.sbb.dks.camundapoc.dynamodb.config.DynamoDBConfig}.
  *
  * @author ue85191 (Markus Loeffler)
  */
 @DynamoDBTable(tableName = "")
-public class WagenEvent {
+public class WagenEvent implements Serializable {
 
     private static final String SEPARATOR = "_";
     private static final String EVENT_SOURCE = "nwm";
