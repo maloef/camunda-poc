@@ -1,7 +1,7 @@
 /*
  * Copyright (C) Schweizerische Bundesbahnen SBB, 2018.
  */
-package ch.sbb.dks.camundapoc.dynamodb.model;
+package ch.sbb.dks.camundapoc.model;
 
 import java.time.Instant;
 
