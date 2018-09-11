@@ -1,4 +1,4 @@
-package ch.sbb.dks.camundapoc;
+package ch.sbb.dks.camundapoc.delegates;
 
 import java.util.logging.Logger;
 
