@@ -31,10 +31,7 @@ public class WagenEventDelegate implements JavaDelegate {
     public void execute(DelegateExecution delegateExecution) throws Exception {
         String zkkNummer = (String)delegateExecution.getVariable("zkkNummer");
         LOGGER.info("zkkNummer:" + zkkNummer, delegateExecution);
-        // Todo find By
-        List<String> wagennummern = Arrays.asList("338593262375", "275544320854", "318046740417", "318567332610", "338135460362");
-        //List<WagenEvent> events = dynamoReader.findByZkkNummer(zkkNummer);
-        List<WagenEvent> events = dynamoReader.findByWagennummern(wagennummern);
+        List<WagenEvent> events = dynamoReader.findByZkkNummer(zkkNummer);
         delegateExecution.setVariable("wagenEvents", events);
     }
 }
