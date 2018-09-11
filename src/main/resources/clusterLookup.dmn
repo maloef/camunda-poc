@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="Definitions_1gohaks" name="DRD" namespace="http://camunda.org/schema/1.0/dmn">
+  <decision id="clusterLookup" name="Decision 1">
+    <decisionTable id="decisionTable_1">
+      <input id="input_1" label="Wagentyp" camunda:inputVariable="wagentyp">
+        <inputExpression id="inputExpression_1" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="output_1" label="Cluster" name="cluster" typeRef="string" />
+      <rule id="DecisionRule_17hoz3u">
+        <inputEntry id="UnaryTests_1r5zzgd">
+          <text>"Eanos"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_05a7v1o">
+          <text>"cluster1"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0bry1hp">
+        <inputEntry id="UnaryTests_0zz0v7l">
+          <text>"Fas"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0dd4m3v">
+          <text>"cluster2"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>
