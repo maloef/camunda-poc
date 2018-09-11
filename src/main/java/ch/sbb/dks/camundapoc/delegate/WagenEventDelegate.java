@@ -1,7 +1,7 @@
 /*
  * Copyright (C) Schweizerische Bundesbahnen SBB, 2018.
  */
-package ch.sbb.dks.camundapoc.delegates;
+package ch.sbb.dks.camundapoc.delegate;
 
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
