@@ -5,6 +5,7 @@ package ch.sbb.dks.camundapoc.dynamodb.read;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +18,12 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
+import com.amazonaws.services.dynamodbv2.document.Index;
+import com.amazonaws.services.dynamodbv2.document.Item;
+import com.amazonaws.services.dynamodbv2.document.ItemCollection;
+import com.amazonaws.services.dynamodbv2.document.QueryOutcome;
+import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
+import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.TableDescription;
 
@@ -51,24 +58,24 @@ public class DynamoReader {
         return tableDescription.getItemCount();
     }
 
-//    private List<WagenEvent> findRecords(String partnernummer, int howMany) {
-//        Index index = dynamoDB.getTable(tableName).getIndex("partnernummer-messageReceivedTimestamp-index");
-//
-//        QuerySpec spec = new QuerySpec()
-//                .withKeyConditionExpression("partnernummer = :p")
-//                .withValueMap(new ValueMap().withString(":p",partnernummer));
-//
-//        ItemCollection<QueryOutcome> items = index.query(spec);
-//        LOGGER.info("items with partnernummer {}: {}", partnernummer, items.getAccumulatedItemCount());
-//        Iterator<Item> iter = items.iterator();
-//
-//        List<WagenEvent> events = new ArrayList<>(howMany);
-//        while (iter.hasNext()) {
-//            Item next = iter.next();
-//            LOGGER.info("next item: {}", items);
-//        }
-//        return events;
-//    }
+    public List<WagenEvent> findByPartner(String partnernummer) {
+        Index index = dynamoDB.getTable(tableName).getIndex("partnernummer-messageReceivedTimestamp-index");
+
+        QuerySpec spec = new QuerySpec()
+                .withKeyConditionExpression("partnernummer = :p")
+                .withValueMap(new ValueMap().withString(":p",partnernummer));
+
+        ItemCollection<QueryOutcome> items = index.query(spec);
+        LOGGER.info("items with partnernummer {}: {}", partnernummer, items.getAccumulatedItemCount());
+        Iterator<Item> iter = items.iterator();
+
+        List<WagenEvent> events = new ArrayList<>();
+        while (iter.hasNext()) {
+            Item next = iter.next();
+            LOGGER.info("next item: {}", items);
+        }
+        return events;
+    }
 
     public List<WagenEvent> findByWagennummern(List<String> wagennummern) {
         List<WagenEvent> events = new ArrayList<>();
