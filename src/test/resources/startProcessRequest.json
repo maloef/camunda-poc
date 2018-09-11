@@ -1,0 +1,13 @@
+URL:
+http://localhost:8080/rest/process-definition/key/Preisberechnung/start
+
+Body:
+{
+"variables":{
+
+"zkkNumer" : {"value" : "82506700"}
+
+},
+
+"withVariablesInReturn": true
+}

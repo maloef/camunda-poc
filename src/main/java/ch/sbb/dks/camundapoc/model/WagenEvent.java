@@ -3,6 +3,7 @@
  */
 package ch.sbb.dks.camundapoc.model;
 
+import java.io.Serializable;
 import java.time.Instant;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
@@ -29,7 +30,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
  * @author ue85191 (Markus Loeffler)
  */
 @DynamoDBTable(tableName = "")
-public class WagenEvent {
+public class WagenEvent implements Serializable {
 
     private static final String SEPARATOR = "_";
     private static final String EVENT_SOURCE = "nwm";
