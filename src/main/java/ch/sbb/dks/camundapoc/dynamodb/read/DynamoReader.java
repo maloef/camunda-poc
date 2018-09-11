@@ -28,7 +28,7 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.TableDescription;
 
 import ch.sbb.dks.camundapoc.dynamodb.config.DynamoDBConfig;
-import ch.sbb.dks.camundapoc.dynamodb.model.WagenEvent;
+import ch.sbb.dks.camundapoc.model.WagenEvent;
 
 
 /**
