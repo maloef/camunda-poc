@@ -3,11 +3,14 @@
  */
 package ch.sbb.dks.camundapoc.delegate;
 
+import ch.sbb.dks.camundapoc.model.Wagenbewegungsblock;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @author ue85191 (Markus Loeffler)
@@ -20,5 +23,14 @@ public class ClusterLookupDelegate implements JavaDelegate {
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
         LOGGER.info("looking up clusters");
+        String cluster = (String) delegateExecution.getVariable("cluster");
+        Wagenbewegungsblock wagenbewegungsblock = (Wagenbewegungsblock) delegateExecution.getVariable("wagenbewegungsblock");
+        wagenbewegungsblock.setCluster(cluster);
+
+        List<Wagenbewegungsblock> wagenbewegungsbloeckeList = (List<Wagenbewegungsblock>) delegateExecution.getVariable("wagenbewegungsbloecke");
+        Integer loopCounter = (Integer) delegateExecution.getVariable("loopCounter");
+        wagenbewegungsbloeckeList.set(loopCounter, wagenbewegungsblock);
+        delegateExecution.setVariable("wagenbewegungsbloecke", wagenbewegungsbloeckeList);
+
     }
 }

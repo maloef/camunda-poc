@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1lbu1tm" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.0.1">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1lbu1tm" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.0.0">
   <bpmn:process id="Preisberechnung" name="Preisberechnung" isExecutable="true">
     <bpmn:documentation>test</bpmn:documentation>
     <bpmn:startEvent id="StartEvent_1" name="Rechnungsanfrage für Kunde">
@@ -52,11 +52,10 @@
         <bpmn:incoming>SequenceFlow_067kj8x</bpmn:incoming>
       </bpmn:endEvent>
       <bpmn:sequenceFlow id="SequenceFlow_0d2pwiy" sourceRef="task_ClusterLookup" targetRef="Task_1hg6tir" />
-      <bpmn:businessRuleTask id="task_ClusterLookup" name="cluster bestimmen" camunda:resultVariable="clusters" camunda:decisionRef="clusterLookup">
+      <bpmn:businessRuleTask id="task_ClusterLookup" name="cluster bestimmen" camunda:resultVariable="cluster" camunda:decisionRef="clusterLookup" camunda:mapDecisionResult="singleEntry">
         <bpmn:extensionElements>
           <camunda:inputOutput>
             <camunda:inputParameter name="wagentyp">${wagenbewegungsblock.wagentyp}</camunda:inputParameter>
-            <camunda:outputParameter name="cluster" />
           </camunda:inputOutput>
         </bpmn:extensionElements>
         <bpmn:incoming>SequenceFlow_0nq9s8x</bpmn:incoming>
