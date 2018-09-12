@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="Definitions_1gohaks" name="DRD" namespace="http://camunda.org/schema/1.0/dmn">
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" id="Definitions_1gohaks" name="DRD" namespace="http://camunda.org/schema/1.0/dmn">
   <decision id="clusterLookup" name="Decision 1">
     <decisionTable id="decisionTable_1">
-      <input id="input_1" label="Wagentyp" camunda:inputVariable="wagentyp">
+      <input id="input_1" label="Wagentyp">
         <inputExpression id="inputExpression_1" typeRef="string">
-          <text></text>
+          <text>wagentyp</text>
         </inputExpression>
       </input>
       <output id="output_1" label="Cluster" name="cluster" typeRef="string" />
