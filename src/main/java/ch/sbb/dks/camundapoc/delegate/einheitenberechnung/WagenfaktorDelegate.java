@@ -21,9 +21,9 @@ public class WagenfaktorDelegate implements JavaDelegate {
     public void execute(DelegateExecution delegateExecution) throws Exception {
         LOGGER.info("wagenfaktor delegate");
         Integer faktorCluster = (Integer) delegateExecution.getVariable("faktorCluster");
-        Integer kommerzielleGesamtdauer = (Integer) delegateExecution.getVariable("kommerzielleGesamtdauer");
+        Integer dauerInMinuten = (Integer) delegateExecution.getVariable("dauerInMinuten");
 
-        Integer einheiten = kommerzielleGesamtdauer * faktorCluster;
+        Integer einheiten = dauerInMinuten * faktorCluster;
         delegateExecution.setVariable("einheiten", einheiten);
 
     }
