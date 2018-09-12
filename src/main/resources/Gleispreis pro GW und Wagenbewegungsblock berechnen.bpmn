@@ -1,28 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1l72sq2" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.0.1">
-  <bpmn:process id="Process_1" isExecutable="true">
+  <bpmn:process id="gleispreisberechnung" name="Gleispreisberechnung" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1" name="Start">
       <bpmn:outgoing>SequenceFlow_123tk2e</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_123tk2e" sourceRef="StartEvent_1" targetRef="Task_19hg3mc" />
-    <bpmn:businessRuleTask id="Task_19hg3mc" name="Gleis-Faktor definieren" camunda:decisionRef="Gleis-Faktor_definieren">
+    <bpmn:sequenceFlow id="SequenceFlow_123tk2e" sourceRef="StartEvent_1" targetRef="Gleis-Faktor_definieren" />
+    <bpmn:businessRuleTask id="Gleis-Faktor_definieren" name="Gleis-Faktor definieren" camunda:resultVariable="gleisfaktor" camunda:decisionRef="Gleis-Faktor_definieren" camunda:mapDecisionResult="singleEntry">
       <bpmn:incoming>SequenceFlow_123tk2e</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0qfx4r8</bpmn:outgoing>
     </bpmn:businessRuleTask>
-    <bpmn:task id="Task_1hjchlp" name="Einheiten mit Gleis-Faktor multiplizieren">
-      <bpmn:incoming>SequenceFlow_0qfx4r8</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_1evziyn</bpmn:outgoing>
-    </bpmn:task>
-    <bpmn:sequenceFlow id="SequenceFlow_0qfx4r8" sourceRef="Task_19hg3mc" targetRef="Task_1hjchlp" />
+    <bpmn:sequenceFlow id="SequenceFlow_0qfx4r8" sourceRef="Gleis-Faktor_definieren" targetRef="Task_1hjchlp" />
     <bpmn:endEvent id="EndEvent_0abjusb" name="Ende">
       <bpmn:incoming>SequenceFlow_1evziyn</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_1evziyn" sourceRef="Task_1hjchlp" targetRef="EndEvent_0abjusb" />
+    <bpmn:serviceTask id="Task_1hjchlp" name="Einheiten mit Gleis-Faktor multiplizieren" camunda:delegateExpression="${gleisfaktorDelegate}">
+      <bpmn:incoming>SequenceFlow_0qfx4r8</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1evziyn</bpmn:outgoing>
+    </bpmn:serviceTask>
     <bpmn:textAnnotation id="TextAnnotation_0qg9qqp">
       <bpmn:text>Inputs (zusätzlich zum Block):
 - Dauer in Minuten
-- Typ Gleis (Privat-/Bahngleis)
-</bpmn:text>
+- Typ Gleis (Privat-/Bahngleis)</bpmn:text>
     </bpmn:textAnnotation>
     <bpmn:association id="Association_15t4xzm" sourceRef="StartEvent_1" targetRef="TextAnnotation_0qg9qqp" />
     <bpmn:textAnnotation id="TextAnnotation_1rjpl04">
@@ -32,7 +31,7 @@
     <bpmn:association id="Association_0qgspl9" sourceRef="EndEvent_0abjusb" targetRef="TextAnnotation_1rjpl04" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="gleispreisberechnung">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="324" y="257" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -50,11 +49,8 @@
         <di:waypoint x="360" y="275" />
         <di:waypoint x="410" y="275" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="BusinessRuleTask_0tc484t_di" bpmnElement="Task_19hg3mc">
+      <bpmndi:BPMNShape id="BusinessRuleTask_0tc484t_di" bpmnElement="Gleis-Faktor_definieren">
         <dc:Bounds x="410" y="235" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Task_1hjchlp_di" bpmnElement="Task_1hjchlp">
-        <dc:Bounds x="560" y="235" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0qfx4r8_di" bpmnElement="SequenceFlow_0qfx4r8">
         <di:waypoint x="510" y="275" />
@@ -77,6 +73,9 @@
         <di:waypoint x="738" y="260" />
         <di:waypoint x="796" y="179" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_0e5rtyw_di" bpmnElement="Task_1hjchlp">
+        <dc:Bounds x="560" y="235" width="100" height="80" />
+      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="Definitions_1m559sf" name="DRD" namespace="http://camunda.org/schema/1.0/dmn">
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" id="Definitions_1m559sf" name="DRD" namespace="http://camunda.org/schema/1.0/dmn">
   <decision id="Gleis-Faktor_definieren" name="Gleis-Faktor definieren">
     <decisionTable id="decisionTable_1">
-      <input id="input_1" label="Gleistyp" camunda:inputVariable="Gleistyp">
+      <input id="input_1" label="Gleistyp">
         <inputExpression id="inputExpression_1" typeRef="string">
-          <text>Gleistyp</text>
+          <text>gleistyp</text>
         </inputExpression>
       </input>
-      <output id="output_1" label="Gleis-Faktor" name="Gleis-Faktor" typeRef="string" />
+      <output id="output_1" label="Gleis-Faktor" name="gleisfaktor" typeRef="double" />
       <rule id="DecisionRule_093ore1">
         <inputEntry id="UnaryTests_07wtjew">
-          <text>Bahn</text>
+          <text>"Bahn"</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_0d4xs5b">
           <text>0.4</text>
@@ -18,10 +18,10 @@
       </rule>
       <rule id="DecisionRule_0y14e7o">
         <inputEntry id="UnaryTests_1h5snkb">
-          <text>Privat</text>
+          <text>"Privat"</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_0utmgcx">
-          <text>0</text>
+          <text>0.0</text>
         </outputEntry>
       </rule>
     </decisionTable>
