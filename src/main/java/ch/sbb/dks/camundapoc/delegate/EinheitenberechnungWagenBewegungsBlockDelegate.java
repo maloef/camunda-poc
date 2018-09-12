@@ -47,6 +47,8 @@ public class EinheitenberechnungWagenBewegungsBlockDelegate implements JavaDeleg
 //        }
         bloecke.add(new Wagenbewegungsblock(events.get(0), events.get(1)));
         bloecke.get(0).setWagentyp("Eanos");
+        bloecke.add(new Wagenbewegungsblock(events.get(1), events.get(2)));
+        bloecke.get(1).setWagentyp("Fas");
         delegateExecution.setVariable("wagenbewegungsbloecke", bloecke);
 
     }
