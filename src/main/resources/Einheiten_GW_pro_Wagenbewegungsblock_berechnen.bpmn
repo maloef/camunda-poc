@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_0lpauqo" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.16.2">
-  <bpmn:process id="Process_1" isExecutable="true">
-    <bpmn:startEvent id="StartEvent_1" name="Einheiten GW pro Wagenbewegungsblock">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_0lpauqo" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.0.1">
+  <bpmn:process id="einheitenberechnung" name="Einheitenberechnung" isExecutable="true">
+    <bpmn:startEvent id="einheitenberechnung_start" name="Einheitenberechnung wird aufgerufen">
       <bpmn:outgoing>SequenceFlow_10mrfxl</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:endEvent id="EndEvent_03ry8sh" name="Ende">
       <bpmn:incoming>SequenceFlow_0wf12c3</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:task id="Task_0ppok34" name="Dauer mit Wagen-Faktor multiplizieren">
-      <bpmn:incoming>SequenceFlow_10mrfxl</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_1wgoud8</bpmn:outgoing>
-    </bpmn:task>
-    <bpmn:sequenceFlow id="SequenceFlow_10mrfxl" sourceRef="StartEvent_1" targetRef="Task_0ppok34" />
-    <bpmn:task id="Task_1jed8zw" name="Einheiten mit Aktions-Faktor Wagen multiplizieren.">
-      <bpmn:incoming>SequenceFlow_1wgoud8</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_0h512jy</bpmn:outgoing>
-    </bpmn:task>
+    <bpmn:sequenceFlow id="SequenceFlow_10mrfxl" sourceRef="einheitenberechnung_start" targetRef="Task_0ppok34" />
     <bpmn:sequenceFlow id="SequenceFlow_1wgoud8" sourceRef="Task_0ppok34" targetRef="Task_1jed8zw" />
-    <bpmn:task id="Task_1kijcrh" name="Einheiten  mit Langsteher-Faktor multiplizieren">
-      <bpmn:incoming>SequenceFlow_08ww7r4</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_0wf12c3</bpmn:outgoing>
-    </bpmn:task>
     <bpmn:sequenceFlow id="SequenceFlow_0h512jy" sourceRef="Task_1jed8zw" targetRef="Task_1goqek5" />
-    <bpmn:businessRuleTask id="Task_1goqek5" name="Langesteher-Faktor definiern" camunda:decisionRef="Langsteher-Faktor">
+    <bpmn:businessRuleTask id="Task_1goqek5" name="Langesteher-Faktor definieren" camunda:resultVariable="langsteherfaktor" camunda:decisionRef="langsteherfaktor" camunda:mapDecisionResult="singleEntry">
       <bpmn:incoming>SequenceFlow_0h512jy</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_08ww7r4</bpmn:outgoing>
     </bpmn:businessRuleTask>
     <bpmn:sequenceFlow id="SequenceFlow_0wf12c3" sourceRef="Task_1kijcrh" targetRef="EndEvent_03ry8sh" />
     <bpmn:sequenceFlow id="SequenceFlow_08ww7r4" sourceRef="Task_1goqek5" targetRef="Task_1kijcrh" />
+    <bpmn:serviceTask id="Task_0ppok34" name="Dauer mit Wagen-Faktor multiplizieren" camunda:delegateExpression="${wagenfaktorDelegate}">
+      <bpmn:incoming>SequenceFlow_10mrfxl</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1wgoud8</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_1jed8zw" name="Einheiten mit Aktions-Faktor Wagen multiplizieren." camunda:delegateExpression="${aktionsfaktorDelegate}">
+      <bpmn:incoming>SequenceFlow_1wgoud8</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0h512jy</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_1kijcrh" name="Einheiten  mit Langsteher-Faktor multiplizieren" camunda:delegateExpression="${langsteherfaktorDelegate}">
+      <bpmn:incoming>SequenceFlow_08ww7r4</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0wf12c3</bpmn:outgoing>
+    </bpmn:serviceTask>
     <bpmn:textAnnotation id="TextAnnotation_15x6qtm">
       <bpmn:text>Inputdaten: 
 - Dauer in Minuten
@@ -35,17 +35,16 @@
 - Wagen
 -- Faktor (aus Cluster)
 -- Faktor Aktion
-- Kommerzielle Gesamtdauer
-</bpmn:text>
+- Kommerzielle Gesamtdauer</bpmn:text>
     </bpmn:textAnnotation>
-    <bpmn:association id="Association_0rmvkgw" sourceRef="StartEvent_1" targetRef="TextAnnotation_15x6qtm" />
+    <bpmn:association id="Association_0rmvkgw" sourceRef="einheitenberechnung_start" targetRef="TextAnnotation_15x6qtm" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
-      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="einheitenberechnung">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="einheitenberechnung_start">
         <dc:Bounds x="171" y="263" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="147" y="306" width="85" height="53" />
+          <dc:Bounds x="147" y="306" width="86" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_15x6qtm_di" bpmnElement="TextAnnotation_15x6qtm">
@@ -57,9 +56,6 @@
           <dc:Bounds x="1193" y="306" width="26" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Task_0ppok34_di" bpmnElement="Task_0ppok34">
-        <dc:Bounds x="291" y="241" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_10mrfxl_di" bpmnElement="SequenceFlow_10mrfxl">
         <di:waypoint x="207" y="281" />
         <di:waypoint x="291" y="281" />
@@ -68,16 +64,10 @@
         <di:waypoint x="189" y="261" />
         <di:waypoint x="234" y="194" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Task_1jed8zw_di" bpmnElement="Task_1jed8zw">
-        <dc:Bounds x="446" y="241" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1wgoud8_di" bpmnElement="SequenceFlow_1wgoud8">
         <di:waypoint x="391" y="281" />
         <di:waypoint x="446" y="281" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Task_1kijcrh_di" bpmnElement="Task_1kijcrh">
-        <dc:Bounds x="871" y="241" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0h512jy_di" bpmnElement="SequenceFlow_0h512jy">
         <di:waypoint x="546" y="281" />
         <di:waypoint x="651" y="281" />
@@ -93,6 +83,15 @@
         <di:waypoint x="751" y="281" />
         <di:waypoint x="871" y="281" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_1x8qn83_di" bpmnElement="Task_0ppok34">
+        <dc:Bounds x="291" y="241" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_1ypx567_di" bpmnElement="Task_1jed8zw">
+        <dc:Bounds x="446" y="241" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_0mxyqgv_di" bpmnElement="Task_1kijcrh">
+        <dc:Bounds x="871" y="241" width="100" height="80" />
+      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>

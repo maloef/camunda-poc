@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="Definitions_1m51wgg" name="DRD" namespace="http://camunda.org/schema/1.0/dmn">
-  <decision id="Langsteher-Faktor" name="Langesteher-Faktor">
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" id="Definitions_1m51wgg" name="DRD" namespace="http://camunda.org/schema/1.0/dmn">
+  <decision id="langsteherfaktor" name="Langesteher-Faktor">
     <decisionTable id="decisionTable_1" hitPolicy="FIRST">
-      <input id="input_1" label="KomGesamt" camunda:inputVariable="KomGesamt">
-        <inputExpression id="inputExpression_1" typeRef="string">
-          <text>kommerzielle Gesamtstanddauer</text>
+      <input id="input_1" label="Kommerzielle Gesamtdauer">
+        <inputExpression id="inputExpression_1" typeRef="integer">
+          <text>kommerzielleGesamtdauer</text>
         </inputExpression>
       </input>
-      <output id="output_1" label="Langsteher-Faktor" name="Langsteher-Faktor" typeRef="string" />
+      <output id="output_1" label="Langsteher-Faktor" name="Langsteher-Faktor" typeRef="integer" />
       <rule id="DecisionRule_09syqd6">
         <description>Länger als 60 Tage</description>
         <inputEntry id="UnaryTests_0n9numu">
-          <text>&gt;86400</text>
+          <text>&gt; 86400</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_1d6p2hs">
           <text>20</text>
@@ -20,7 +20,7 @@
       <rule id="DecisionRule_0a0foy5">
         <description>Länger als 30 Tage</description>
         <inputEntry id="UnaryTests_1ha0oha">
-          <text>&gt;43200</text>
+          <text>&gt; 43200</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_1nfqrz1">
           <text>5</text>
