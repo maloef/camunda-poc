@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import ch.sbb.dks.camundapoc.model.Wagenbewegungsblock;
+
 /**
  * @author ue85191 (Markus Loeffler)
  */
@@ -24,9 +26,12 @@ public class GleisfaktorDelegate implements JavaDelegate {
         Double gleisfaktor = (Double) delegateExecution.getVariable("gleisfaktor");
         LOGGER.info("gleisfaktor: {}", gleisfaktor);
 
-        Integer dauerInMinuten = (Integer) delegateExecution.getVariable("dauerInMinuten");
-        Double einheiten = dauerInMinuten * gleisfaktor;
+        Wagenbewegungsblock wagenbewegungsblock = (Wagenbewegungsblock) delegateExecution.getVariable("wagenbewegungsblock");
+        int dauerInMinuten = wagenbewegungsblock.getDauerInMinuten();
+        int einheitenGleis = dauerInMinuten * gleisfaktor.intValue();
 
-        delegateExecution.setVariable("einheiten", einheiten);
+        wagenbewegungsblock.setEinheitenGleis(einheitenGleis);
+
+//        delegateExecution.setVariable("einheiten", einheiten);
     }
 }

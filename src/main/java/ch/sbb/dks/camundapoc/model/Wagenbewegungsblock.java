@@ -17,7 +17,10 @@ public class Wagenbewegungsblock implements Serializable {
     private String cluster;
     private String gleistyp;
 
-    private Integer einheiten;
+    private int dauerInMinuten;
+    private Integer einheitenGleis = 0;
+    private Integer einheitenWagen = 0;
+    private Integer einheiten = 0;
     private Boolean abgerechnet;
 
     public Wagenbewegungsblock() {
@@ -26,6 +29,7 @@ public class Wagenbewegungsblock implements Serializable {
     public Wagenbewegungsblock(WagenEvent startEvent, WagenEvent endEvent) {
         this.startEvent = startEvent;
         this.endEvent = endEvent;
+        gleistyp = "Bahn";
     }
 
     public WagenEvent getStartEvent() {
@@ -68,6 +72,10 @@ public class Wagenbewegungsblock implements Serializable {
         this.einheiten = einheiten;
     }
 
+    private void updateEinheiten() {
+        einheiten = einheitenGleis + einheitenWagen;
+    }
+
     public Boolean getAbgerechnet() {
         return abgerechnet;
     }
@@ -82,5 +90,31 @@ public class Wagenbewegungsblock implements Serializable {
 
     public void setGleistyp(String gleistyp) {
         this.gleistyp = gleistyp;
+    }
+
+    public Integer getEinheitenGleis() {
+        return einheitenGleis;
+    }
+
+    public void setEinheitenGleis(Integer einheitenGleis) {
+        this.einheitenGleis = einheitenGleis;
+        updateEinheiten();
+    }
+
+    public Integer getEinheitenWagen() {
+        return einheitenWagen;
+    }
+
+    public void setEinheitenWagen(Integer einheitenWagen) {
+        this.einheitenWagen = einheitenWagen;
+        updateEinheiten();
+    }
+
+    public void setDauerInMinuten(int dauerInMinuten) {
+        this.dauerInMinuten = dauerInMinuten;
+    }
+
+    public int getDauerInMinuten() {
+        return dauerInMinuten;
     }
 }

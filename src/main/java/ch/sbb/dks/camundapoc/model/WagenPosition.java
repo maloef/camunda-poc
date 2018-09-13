@@ -13,6 +13,7 @@ public class WagenPosition {
     private List<Wagenbewegungsblock> bloecke;
 
     private Integer kommerzielleGesamtdauer;
+    private Integer einheiten;
 
     public WagenPosition() {
     }
@@ -36,5 +37,13 @@ public class WagenPosition {
 
     public void setKommerzielleGesamtdauer(Integer kommerzielleGesamtdauer) {
         this.kommerzielleGesamtdauer = kommerzielleGesamtdauer;
+    }
+
+    public Integer getEinheiten() {
+        return einheiten;
+    }
+
+    public void setEinheiten(Integer einheiten) {
+        this.einheiten = einheiten;
     }
 }
