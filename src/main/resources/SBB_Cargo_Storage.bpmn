@@ -27,7 +27,7 @@
       <bpmn:incoming>SequenceFlow_08o66lp</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_08rnj0a</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="Task_0whsmau" name="Wagenpositionen bestimmen" camunda:delegateExpression="${calculate_wagen_positionen}">
+    <bpmn:serviceTask id="Task_0whsmau" name="Wagenpositionen bestimmen" camunda:delegateExpression="${logger}">
       <bpmn:incoming>SequenceFlow_0iqq93l</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_11cryg3</bpmn:outgoing>
     </bpmn:serviceTask>
