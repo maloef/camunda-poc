@@ -12,8 +12,8 @@ public class WagenPosition {
 
     private List<Wagenbewegungsblock> bloecke;
 
-    private Integer kommerzielleGesamtdauer;
-    private Integer einheiten;
+    private long kommerzielleGesamtdauer;
+    private long einheiten;
 
     public WagenPosition() {
     }
@@ -31,19 +31,19 @@ public class WagenPosition {
         this.bloecke = bloecke;
     }
 
-    public Integer getKommerzielleGesamtdauer() {
+    public long getKommerzielleGesamtdauer() {
         return kommerzielleGesamtdauer;
     }
 
-    public void setKommerzielleGesamtdauer(Integer kommerzielleGesamtdauer) {
+    public void setKommerzielleGesamtdauer(long kommerzielleGesamtdauer) {
         this.kommerzielleGesamtdauer = kommerzielleGesamtdauer;
     }
 
-    public Integer getEinheiten() {
+    public long getEinheiten() {
         return einheiten;
     }
 
-    public void setEinheiten(Integer einheiten) {
+    public void setEinheiten(long einheiten) {
         this.einheiten = einheiten;
     }
 }

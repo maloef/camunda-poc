@@ -26,7 +26,7 @@ public class EinheitenSummierenDelegate implements JavaDelegate {
     public void execute(DelegateExecution delegateExecution) throws Exception {
         WagenPosition wagenPosition = (WagenPosition) delegateExecution.getVariable("wagenPosition");
 
-        int sum = wagenPosition.getBloecke().stream().collect(Collectors.summingInt(Wagenbewegungsblock::getEinheiten));
+        long sum = wagenPosition.getBloecke().stream().collect(Collectors.summingLong(Wagenbewegungsblock::getEinheiten));
 //        for (Wagenbewegungsblock block : wagenPosition.getBloecke()) {
 //            sum += block.getEinheiten();
 //        }

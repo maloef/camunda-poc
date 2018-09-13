@@ -17,11 +17,11 @@ public class Wagenbewegungsblock implements Serializable {
     private String cluster;
     private String gleistyp;
 
-    private int dauerInMinuten;
-    private Integer einheitenGleis = 0;
-    private Integer einheitenWagen = 0;
-    private Integer einheiten = 0;
-    private Boolean abgerechnet;
+    private long dauerInMinuten;
+    private long einheitenGleis = 0;
+    private long einheitenWagen = 0;
+    private long einheiten = 0;
+    private boolean abgerechnet;
 
     public Wagenbewegungsblock() {
     }
@@ -64,11 +64,11 @@ public class Wagenbewegungsblock implements Serializable {
         this.cluster = cluster;
     }
 
-    public Integer getEinheiten() {
+    public long getEinheiten() {
         return einheiten;
     }
 
-    public void setEinheiten(Integer einheiten) {
+    public void setEinheiten(int einheiten) {
         this.einheiten = einheiten;
     }
 
@@ -76,11 +76,11 @@ public class Wagenbewegungsblock implements Serializable {
         einheiten = einheitenGleis + einheitenWagen;
     }
 
-    public Boolean getAbgerechnet() {
+    public boolean getAbgerechnet() {
         return abgerechnet;
     }
 
-    public void setAbgerechnet(Boolean abgerechnet) {
+    public void setAbgerechnet(boolean abgerechnet) {
         this.abgerechnet = abgerechnet;
     }
 
@@ -92,29 +92,29 @@ public class Wagenbewegungsblock implements Serializable {
         this.gleistyp = gleistyp;
     }
 
-    public Integer getEinheitenGleis() {
+    public long getEinheitenGleis() {
         return einheitenGleis;
     }
 
-    public void setEinheitenGleis(Integer einheitenGleis) {
+    public void setEinheitenGleis(long einheitenGleis) {
         this.einheitenGleis = einheitenGleis;
         updateEinheiten();
     }
 
-    public Integer getEinheitenWagen() {
+    public long getEinheitenWagen() {
         return einheitenWagen;
     }
 
-    public void setEinheitenWagen(Integer einheitenWagen) {
+    public void setEinheitenWagen(long einheitenWagen) {
         this.einheitenWagen = einheitenWagen;
         updateEinheiten();
     }
 
-    public void setDauerInMinuten(int dauerInMinuten) {
+    public void setDauerInMinuten(long dauerInMinuten) {
         this.dauerInMinuten = dauerInMinuten;
     }
 
-    public int getDauerInMinuten() {
+    public long getDauerInMinuten() {
         return dauerInMinuten;
     }
 }

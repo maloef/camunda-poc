@@ -14,7 +14,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,31 +31,61 @@ import java.util.Map;
 public class EinheitenberechnungWagenBewegungsBlockDelegate implements JavaDelegate {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EinheitenberechnungWagenBewegungsBlockDelegate.class);
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
     @Autowired
     private DynamoReader dynamoReader;
 
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
-        List<WagenEvent> events = (List<WagenEvent>) delegateExecution.getVariable("wagenEvents");
+        List<WagenEvent> eventsFromContext = (List<WagenEvent>) delegateExecution.getVariable("wagenEvents");
+        List<WagenEvent> events = new ArrayList<>(eventsFromContext);
+        LOGGER.info("first timestamp unsorted events: {}", events.get(0).getTimestamp());
+        sortEvents(events);
+        LOGGER.info("first timestamp sorted events: {}", events.get(0).getTimestamp());
         LOGGER.info("Calculating Einheiten ...");
 
         List<Wagenbewegungsblock> bloecke = new ArrayList<>();
-//        Map<String, List<WagenEvent>> wagennummernToEvents = splitWagenEvents(events);
-//        for (String wagennummer : wagennummernToEvents.keySet()) {
-//            List<WagenEvent> wagenEvents = wagennummernToEvents.get(wagennummer);
-//            bloecke.add(new Wagenbewegungsblock(wagenEvents.get(0), wagenEvents.get(0)));
-//            for (int i = 0; i < wagenEvents.size() - 1; i++) {
-//                bloecke.add(new Wagenbewegungsblock(wagenEvents.get(i), wagenEvents.get(i + 1)));
-//            }
-//            WagenEvent last = wagenEvents.get(wagenEvents.size() - 1);
-//            bloecke.add(new Wagenbewegungsblock(last, last));
-//        }
-        bloecke.add(new Wagenbewegungsblock(events.get(0), events.get(1)));
-        bloecke.get(0).setWagentyp("Eanos");
-        bloecke.add(new Wagenbewegungsblock(events.get(1), events.get(2)));
-        bloecke.get(1).setWagentyp("Fas");
-        delegateExecution.setVariable("wagenbewegungsbloecke", bloecke);
+        boolean useDummyBloecke = true;
+        if (useDummyBloecke) {
+            bloecke.add(createBlock(events.get(0), events.get(1), "Eanos"));
+            bloecke.add(createBlock(events.get(1), events.get(2), "Fas"));
+            delegateExecution.setVariable("wagenbewegungsbloecke", bloecke);
+        } else {
+            Map<String, List<WagenEvent>> wagennummernToEvents = splitWagenEvents(events);
+            for (String wagennummer : wagennummernToEvents.keySet()) {
+                List<WagenEvent> wagenEvents = wagennummernToEvents.get(wagennummer);
+                for (int i = 0; i < wagenEvents.size() - 1; i++) {
+                    String wagentyp = i % 2 == 0 ? "Eanos" : "Fas";
+                    bloecke.add(createBlock(events.get(i), events.get(i + 1), wagentyp));
+                }
+//                WagenEvent last = wagenEvents.get(wagenEvents.size() - 1);
+            }
+            delegateExecution.setVariable("wagenbewegungsbloecke", bloecke);
+        }
+    }
+
+    private Wagenbewegungsblock createBlock(WagenEvent e1, WagenEvent e2, String wagentyp) {
+        Wagenbewegungsblock block = new Wagenbewegungsblock(e1, e2);
+        block.setWagentyp(wagentyp);
+        return block;
+    }
+
+    private void sortEvents(List<WagenEvent> events) {
+        Collections.sort(events, new Comparator<WagenEvent>() {
+            @Override
+            public int compare(WagenEvent o1, WagenEvent o2) {
+                LocalDateTime first = LocalDateTime.parse(o1.getTimestamp(), formatter);
+                LocalDateTime second = LocalDateTime.parse(o2.getTimestamp(), formatter);
+                if (first.isBefore(second)) {
+                    return -1;
+                }
+                if (first.isAfter(second)) {
+                    return 1;
+                }
+                return 0;
+            }
+        });
     }
 
     private Map<String, List<WagenEvent>> splitWagenEvents(List<WagenEvent> events) {

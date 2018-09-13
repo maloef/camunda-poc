@@ -33,15 +33,12 @@ public class WagenfaktorDelegate implements JavaDelegate {
 
         String cluster = block.getCluster();
 
-//        Integer faktorCluster = (Integer) delegateExecution.getVariable("faktorCluster");
         Integer faktorCluster = faktorCluster(cluster);
         int dauerInMinuten = minutesBetween(block.getStartEvent().getTimestamp(), block.getEndEvent().getTimestamp());
         block.setDauerInMinuten(dauerInMinuten);
-//        Integer dauerInMinuten = (Integer) delegateExecution.getVariable("dauerInMinuten");
 
         Integer einheiten = dauerInMinuten * faktorCluster;
         block.setEinheitenWagen(einheiten);
-//        delegateExecution.setVariable("einheiten", einheiten);
     }
 
     int minutesBetween(String fromString, String toString) {

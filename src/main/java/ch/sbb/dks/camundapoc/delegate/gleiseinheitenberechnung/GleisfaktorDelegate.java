@@ -27,8 +27,8 @@ public class GleisfaktorDelegate implements JavaDelegate {
         LOGGER.info("gleisfaktor: {}", gleisfaktor);
 
         Wagenbewegungsblock wagenbewegungsblock = (Wagenbewegungsblock) delegateExecution.getVariable("wagenbewegungsblock");
-        int dauerInMinuten = wagenbewegungsblock.getDauerInMinuten();
-        int einheitenGleis = dauerInMinuten * gleisfaktor.intValue();
+        long dauerInMinuten = wagenbewegungsblock.getDauerInMinuten();
+        long einheitenGleis = dauerInMinuten * gleisfaktor.intValue();
 
         wagenbewegungsblock.setEinheitenGleis(einheitenGleis);
 

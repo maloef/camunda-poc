@@ -31,11 +31,8 @@ public class AktionsfaktorDelegate implements JavaDelegate {
             faktorAktion = 1;
         }
 
-        Integer einheitenAlt = block.getEinheiten();
-        if (einheitenAlt == null) {
-            einheitenAlt = 0;
-        }
-        Integer einheiten = einheitenAlt * faktorAktion;
+        long einheitenAlt = block.getEinheiten();
+        long einheiten = einheitenAlt * faktorAktion;
         block.setEinheitenWagen(einheiten);
 
         delegateExecution.setVariable("einheiten", einheiten);
