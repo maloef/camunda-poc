@@ -1,8 +1,9 @@
 /*
  * Copyright (C) Schweizerische Bundesbahnen SBB, 2018.
  */
-package ch.sbb.dks.camundapoc.delegate;
+package ch.sbb.dks.camundapoc.delegate.preisberechnung;
 
+import ch.sbb.dks.camundapoc.model.WagenPosition;
 import ch.sbb.dks.camundapoc.model.Wagenbewegungsblock;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
@@ -30,7 +31,12 @@ public class ClusterLookupDelegate implements JavaDelegate {
         List<Wagenbewegungsblock> wagenbewegungsbloeckeList = (List<Wagenbewegungsblock>) delegateExecution.getVariable("wagenbewegungsbloecke");
         Integer loopCounter = (Integer) delegateExecution.getVariable("loopCounter");
         wagenbewegungsbloeckeList.set(loopCounter, wagenbewegungsblock);
+
+//        WagenPosition wagenPosition = (WagenPosition) delegateExecution.getVariable("wagenPosition");
+        WagenPosition wagenPosition = new WagenPosition(wagenbewegungsbloeckeList);
+
         delegateExecution.setVariable("wagenbewegungsbloecke", wagenbewegungsbloeckeList);
+        delegateExecution.setVariable("wagenPosition", wagenPosition);
 
     }
 }

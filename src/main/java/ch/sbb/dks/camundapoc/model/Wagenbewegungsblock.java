@@ -15,7 +15,10 @@ public class Wagenbewegungsblock implements Serializable {
 
     private String wagentyp;
     private String cluster;
+    private String gleistyp;
+
     private Integer einheiten;
+    private Boolean abgerechnet;
 
     public Wagenbewegungsblock() {
 
@@ -64,5 +67,13 @@ public class Wagenbewegungsblock implements Serializable {
 
     public void setEinheiten(Integer einheiten) {
         this.einheiten = einheiten;
+    }
+
+    public Boolean getAbgerechnet() {
+        return abgerechnet;
+    }
+
+    public void setAbgerechnet(Boolean abgerechnet) {
+        this.abgerechnet = abgerechnet;
     }
 }

@@ -1,7 +1,7 @@
 /*
  * Copyright (C) Schweizerische Bundesbahnen SBB, 2018.
  */
-package ch.sbb.dks.camundapoc.delegate;
+package ch.sbb.dks.camundapoc.delegate.preisberechnung;
 
 import ch.sbb.dks.camundapoc.dynamodb.read.DynamoReader;
 import ch.sbb.dks.camundapoc.model.WagenEvent;
@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
