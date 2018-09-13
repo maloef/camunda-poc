@@ -42,7 +42,7 @@
     <bpmn:subProcess id="ClusterBestimmen" name="Cluster bestimmen">
       <bpmn:incoming>SequenceFlow_1n23dzk</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_13mtccb</bpmn:outgoing>
-      <bpmn:multiInstanceLoopCharacteristics isSequential="true" camunda:collection="${wagenbewegungsbloecke}" camunda:elementVariable="wagenbewegungsblock" />
+      <bpmn:multiInstanceLoopCharacteristics isSequential="true" camunda:collection="${wagenPosition.getBloecke()}" camunda:elementVariable="wagenbewegungsblock" />
       <bpmn:startEvent id="StartEvent_0s1iuqq">
         <bpmn:outgoing>SequenceFlow_0nq9s8x</bpmn:outgoing>
       </bpmn:startEvent>

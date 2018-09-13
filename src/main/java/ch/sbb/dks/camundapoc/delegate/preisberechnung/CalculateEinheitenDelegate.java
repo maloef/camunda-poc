@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import ch.sbb.dks.camundapoc.model.WagenPosition;
 import ch.sbb.dks.camundapoc.model.Wagenbewegungsblock;
 
 /**
@@ -25,7 +26,7 @@ public class CalculateEinheitenDelegate implements JavaDelegate {
     public void execute(DelegateExecution delegateExecution) throws Exception {
         LOGGER.info("calculating einheiten");
 
-        List<Wagenbewegungsblock> bloecke = (List<Wagenbewegungsblock>) delegateExecution.getVariable("wagenbewegungsbloecke");
-        LOGGER.info("blöcke: {}", bloecke.size());
+        WagenPosition wagenPosition = (WagenPosition) delegateExecution.getVariable("wagenPosition");
+        LOGGER.info("blöcke: {}", wagenPosition.getBloecke().size());
     }
 }

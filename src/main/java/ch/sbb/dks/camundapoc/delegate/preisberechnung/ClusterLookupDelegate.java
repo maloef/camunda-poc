@@ -28,14 +28,12 @@ public class ClusterLookupDelegate implements JavaDelegate {
         Wagenbewegungsblock wagenbewegungsblock = (Wagenbewegungsblock) delegateExecution.getVariable("wagenbewegungsblock");
         wagenbewegungsblock.setCluster(cluster);
 
-        List<Wagenbewegungsblock> wagenbewegungsbloeckeList = (List<Wagenbewegungsblock>) delegateExecution.getVariable("wagenbewegungsbloecke");
+        WagenPosition wagenPosition = (WagenPosition) delegateExecution.getVariable("wagenPosition");
+        List<Wagenbewegungsblock> wagenbewegungsbloeckeList = wagenPosition.getBloecke();
         Integer loopCounter = (Integer) delegateExecution.getVariable("loopCounter");
         wagenbewegungsbloeckeList.set(loopCounter, wagenbewegungsblock);
 
-//        WagenPosition wagenPosition = (WagenPosition) delegateExecution.getVariable("wagenPosition");
-        WagenPosition wagenPosition = new WagenPosition(wagenbewegungsbloeckeList);
-
-        delegateExecution.setVariable("wagenbewegungsbloecke", wagenbewegungsbloeckeList);
+//        delegateExecution.setVariable("wagenbewegungsbloecke", wagenbewegungsbloeckeList);
         delegateExecution.setVariable("wagenPosition", wagenPosition);
 
     }
