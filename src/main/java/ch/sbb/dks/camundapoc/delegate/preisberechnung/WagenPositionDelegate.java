@@ -30,5 +30,6 @@ public class WagenPositionDelegate implements JavaDelegate {
         WagenPosition wagenPosition = new WagenPosition(bloecke);
 
         delegateExecution.setVariable("wagenPosition", wagenPosition);
+
     }
 }

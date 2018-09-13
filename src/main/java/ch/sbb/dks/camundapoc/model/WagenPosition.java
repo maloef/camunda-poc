@@ -19,6 +19,7 @@ public class WagenPosition {
 
     public WagenPosition(List<Wagenbewegungsblock> bloecke) {
         this.bloecke = bloecke;
+        kommerzielleGesamtdauer = 43000;
     }
 
     public List<Wagenbewegungsblock> getBloecke() {

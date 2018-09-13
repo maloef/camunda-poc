@@ -21,7 +21,6 @@ public class Wagenbewegungsblock implements Serializable {
     private Boolean abgerechnet;
 
     public Wagenbewegungsblock() {
-
     }
 
     public Wagenbewegungsblock(WagenEvent startEvent, WagenEvent endEvent) {
@@ -75,5 +74,13 @@ public class Wagenbewegungsblock implements Serializable {
 
     public void setAbgerechnet(Boolean abgerechnet) {
         this.abgerechnet = abgerechnet;
+    }
+
+    public String getGleistyp() {
+        return gleistyp;
+    }
+
+    public void setGleistyp(String gleistyp) {
+        this.gleistyp = gleistyp;
     }
 }

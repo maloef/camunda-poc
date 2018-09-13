@@ -59,45 +59,21 @@
     <bpmn:subProcess id="einheitenBestimmen" name="Einheiten bestimmen">
       <bpmn:incoming>SequenceFlow_1xsu2w1</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0auwr6q</bpmn:outgoing>
-      <bpmn:task id="Task_0pouzj9" name="Einheiten summieren">
-        <bpmn:incoming>SequenceFlow_0o6md5w</bpmn:incoming>
-        <bpmn:outgoing>SequenceFlow_0o1l3bk</bpmn:outgoing>
-      </bpmn:task>
       <bpmn:endEvent id="EndEvent_0cqsqsb" name="Ende">
-        <bpmn:incoming>SequenceFlow_0o1l3bk</bpmn:incoming>
+        <bpmn:incoming>SequenceFlow_097f9f6</bpmn:incoming>
       </bpmn:endEvent>
-      <bpmn:parallelGateway id="ParallelGateway_0ou9qsz">
-        <bpmn:incoming>SequenceFlow_1wylpsk</bpmn:incoming>
-        <bpmn:outgoing>SequenceFlow_196pu94</bpmn:outgoing>
-        <bpmn:outgoing>SequenceFlow_0h6mp8h</bpmn:outgoing>
-      </bpmn:parallelGateway>
-      <bpmn:parallelGateway id="ParallelGateway_0obcm6w">
-        <bpmn:incoming>SequenceFlow_10vt7tf</bpmn:incoming>
-        <bpmn:incoming>SequenceFlow_159k2il</bpmn:incoming>
-        <bpmn:outgoing>SequenceFlow_0o6md5w</bpmn:outgoing>
-      </bpmn:parallelGateway>
-      <bpmn:exclusiveGateway id="ExclusiveGateway_0hxsbux" name="Mehr 1 Block?">
-        <bpmn:incoming>SequenceFlow_1yhye2p</bpmn:incoming>
-        <bpmn:outgoing>SequenceFlow_1wylpsk</bpmn:outgoing>
-        <bpmn:outgoing>SequenceFlow_009hb6w</bpmn:outgoing>
-      </bpmn:exclusiveGateway>
-      <bpmn:endEvent id="EndEvent_14fsaih" name="Ende">
-        <bpmn:incoming>SequenceFlow_1cjh7rc</bpmn:incoming>
-      </bpmn:endEvent>
-      <bpmn:task id="Task_10tc747" name="Einheiten =0 setzten">
-        <bpmn:incoming>SequenceFlow_009hb6w</bpmn:incoming>
-        <bpmn:outgoing>SequenceFlow_1cjh7rc</bpmn:outgoing>
-      </bpmn:task>
-      <bpmn:startEvent id="StartEvent_0lhlok3" name="Start">
+      <bpmn:endEvent id="EndEvent_14fsaih" name="Ende" />
+      <bpmn:startEvent id="startEinheitenBestimmen" name="Start">
         <bpmn:outgoing>SequenceFlow_1kxn5iu</bpmn:outgoing>
       </bpmn:startEvent>
       <bpmn:task id="Task_0ecnamr" name="Anzahl Blöcke in Position bestimmen">
         <bpmn:incoming>SequenceFlow_1kxn5iu</bpmn:incoming>
-        <bpmn:outgoing>SequenceFlow_1yhye2p</bpmn:outgoing>
+        <bpmn:outgoing>SequenceFlow_12v0u76</bpmn:outgoing>
       </bpmn:task>
       <bpmn:subProcess id="SubProcess_04ffy5y" name="Einheiten Gleismiete pro Wagenbewegungsblock berechnen">
-        <bpmn:incoming>SequenceFlow_0h6mp8h</bpmn:incoming>
-        <bpmn:outgoing>SequenceFlow_159k2il</bpmn:outgoing>
+        <bpmn:incoming>SequenceFlow_12v0u76</bpmn:incoming>
+        <bpmn:outgoing>SequenceFlow_097f9f6</bpmn:outgoing>
+        <bpmn:multiInstanceLoopCharacteristics isSequential="true" camunda:collection="${wagenPosition.getBloecke()}" camunda:elementVariable="wagenbewegungsblock" />
         <bpmn:startEvent id="StartEvent_0lzqkp7" name="Start">
           <bpmn:outgoing>SequenceFlow_1kq1i94</bpmn:outgoing>
         </bpmn:startEvent>
@@ -105,6 +81,11 @@
           <bpmn:incoming>SequenceFlow_0wqa6nw</bpmn:incoming>
         </bpmn:endEvent>
         <bpmn:businessRuleTask id="BusinessRuleTask_0fumuq3" name="Langesteher-Faktor definieren" camunda:resultVariable="langsteherfaktor" camunda:decisionRef="langsteherfaktor" camunda:mapDecisionResult="singleEntry">
+          <bpmn:extensionElements>
+            <camunda:inputOutput>
+              <camunda:inputParameter name="kommerzielleGesamtdauer">${wagenPosition.kommerzielleGesamtdauer}</camunda:inputParameter>
+            </camunda:inputOutput>
+          </bpmn:extensionElements>
           <bpmn:incoming>SequenceFlow_1bhz5zf</bpmn:incoming>
           <bpmn:outgoing>SequenceFlow_0vtx01p</bpmn:outgoing>
         </bpmn:businessRuleTask>
@@ -136,21 +117,9 @@
         </bpmn:textAnnotation>
         <bpmn:association id="Association_0p7ik24" sourceRef="StartEvent_0lzqkp7" targetRef="TextAnnotation_0anylzn" />
       </bpmn:subProcess>
-      <bpmn:callActivity id="CallActivity_0zyagpu" name="Einheiten Güterwagen berechnen" calledElement="einheitenberechnung">
-        <bpmn:incoming>SequenceFlow_196pu94</bpmn:incoming>
-        <bpmn:outgoing>SequenceFlow_10vt7tf</bpmn:outgoing>
-      </bpmn:callActivity>
-      <bpmn:sequenceFlow id="SequenceFlow_0o6md5w" sourceRef="ParallelGateway_0obcm6w" targetRef="Task_0pouzj9" />
-      <bpmn:sequenceFlow id="SequenceFlow_0o1l3bk" sourceRef="Task_0pouzj9" targetRef="EndEvent_0cqsqsb" />
-      <bpmn:sequenceFlow id="SequenceFlow_1wylpsk" name="nein" sourceRef="ExclusiveGateway_0hxsbux" targetRef="ParallelGateway_0ou9qsz" />
-      <bpmn:sequenceFlow id="SequenceFlow_196pu94" sourceRef="ParallelGateway_0ou9qsz" targetRef="CallActivity_0zyagpu" />
-      <bpmn:sequenceFlow id="SequenceFlow_10vt7tf" sourceRef="CallActivity_0zyagpu" targetRef="ParallelGateway_0obcm6w" />
-      <bpmn:sequenceFlow id="SequenceFlow_1yhye2p" sourceRef="Task_0ecnamr" targetRef="ExclusiveGateway_0hxsbux" />
-      <bpmn:sequenceFlow id="SequenceFlow_009hb6w" name="ja" sourceRef="ExclusiveGateway_0hxsbux" targetRef="Task_10tc747" />
-      <bpmn:sequenceFlow id="SequenceFlow_1cjh7rc" sourceRef="Task_10tc747" targetRef="EndEvent_14fsaih" />
-      <bpmn:sequenceFlow id="SequenceFlow_1kxn5iu" sourceRef="StartEvent_0lhlok3" targetRef="Task_0ecnamr" />
-      <bpmn:sequenceFlow id="SequenceFlow_0h6mp8h" sourceRef="ParallelGateway_0ou9qsz" targetRef="SubProcess_04ffy5y" />
-      <bpmn:sequenceFlow id="SequenceFlow_159k2il" sourceRef="SubProcess_04ffy5y" targetRef="ParallelGateway_0obcm6w" />
+      <bpmn:sequenceFlow id="SequenceFlow_1kxn5iu" sourceRef="startEinheitenBestimmen" targetRef="Task_0ecnamr" />
+      <bpmn:sequenceFlow id="SequenceFlow_12v0u76" sourceRef="Task_0ecnamr" targetRef="SubProcess_04ffy5y" />
+      <bpmn:sequenceFlow id="SequenceFlow_097f9f6" sourceRef="SubProcess_04ffy5y" targetRef="EndEvent_0cqsqsb" />
       <bpmn:textAnnotation id="TextAnnotation_081mznu">
         <bpmn:text>Soll automatisch auch abspeichern</bpmn:text>
       </bpmn:textAnnotation>
@@ -158,8 +127,7 @@
         <bpmn:text>Input:
 Wagenposition (eine)</bpmn:text>
       </bpmn:textAnnotation>
-      <bpmn:association id="Association_0lhgt1p" sourceRef="Task_0pouzj9" targetRef="TextAnnotation_081mznu" />
-      <bpmn:association id="Association_0x9z0gu" sourceRef="StartEvent_0lhlok3" targetRef="TextAnnotation_140bhe2" />
+      <bpmn:association id="Association_0x9z0gu" sourceRef="startEinheitenBestimmen" targetRef="TextAnnotation_140bhe2" />
     </bpmn:subProcess>
     <bpmn:sequenceFlow id="SequenceFlow_1xsu2w1" sourceRef="ClusterBestimmen" targetRef="einheitenBestimmen" />
     <bpmn:sequenceFlow id="SequenceFlow_0auwr6q" sourceRef="einheitenBestimmen" targetRef="EndEvent_1lud4hl" />
@@ -258,25 +226,10 @@ Zeitraum</bpmn:text>
       <bpmndi:BPMNShape id="SubProcess_1qd73cs_di" bpmnElement="einheitenBestimmen" isExpanded="true">
         <dc:Bounds x="1386" y="-206" width="2934" height="956" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Task_0pouzj9_di" bpmnElement="Task_0pouzj9">
-        <dc:Bounds x="3766" y="125" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="EndEvent_0cqsqsb_di" bpmnElement="EndEvent_0cqsqsb">
         <dc:Bounds x="4184" y="147" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="4189" y="190" width="26" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="ParallelGateway_0ou9qsz_di" bpmnElement="ParallelGateway_0ou9qsz">
-        <dc:Bounds x="2177" y="140" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="ParallelGateway_0obcm6w_di" bpmnElement="ParallelGateway_0obcm6w">
-        <dc:Bounds x="3607" y="140" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="ExclusiveGateway_0hxsbux_di" bpmnElement="ExclusiveGateway_0hxsbux" isMarkerVisible="true">
-        <dc:Bounds x="2005" y="140" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1995" y="200" width="71" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="EndEvent_14fsaih_di" bpmnElement="EndEvent_14fsaih">
@@ -285,10 +238,7 @@ Zeitraum</bpmn:text>
           <dc:Bounds x="3397" y="-103" width="26" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Task_10tc747_di" bpmnElement="Task_10tc747">
-        <dc:Bounds x="2122" y="-168" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="StartEvent_0lhlok3_di" bpmnElement="StartEvent_0lhlok3">
+      <bpmndi:BPMNShape id="StartEvent_0lhlok3_di" bpmnElement="startEinheitenBestimmen">
         <dc:Bounds x="1731" y="147" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1737" y="190" width="25" height="14" />
@@ -300,60 +250,12 @@ Zeitraum</bpmn:text>
       <bpmndi:BPMNShape id="SubProcess_04ffy5y_di" bpmnElement="SubProcess_04ffy5y" isExpanded="true">
         <dc:Bounds x="2275" y="313" width="1253" height="357" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="CallActivity_0zyagpu_di" bpmnElement="CallActivity_0zyagpu">
-        <dc:Bounds x="2852" y="181" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_081mznu_di" bpmnElement="TextAnnotation_081mznu">
         <dc:Bounds x="3766" y="29" width="100" height="68" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_140bhe2_di" bpmnElement="TextAnnotation_140bhe2">
         <dc:Bounds x="1752" y="8" width="100" height="53" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_0o6md5w_di" bpmnElement="SequenceFlow_0o6md5w">
-        <di:waypoint x="3657" y="165" />
-        <di:waypoint x="3766" y="165" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SequenceFlow_0o1l3bk_di" bpmnElement="SequenceFlow_0o1l3bk">
-        <di:waypoint x="3866" y="165" />
-        <di:waypoint x="4184" y="165" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_0lhgt1p_di" bpmnElement="Association_0lhgt1p">
-        <di:waypoint x="3816" y="125" />
-        <di:waypoint x="3816" y="97" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SequenceFlow_1wylpsk_di" bpmnElement="SequenceFlow_1wylpsk">
-        <di:waypoint x="2055" y="165" />
-        <di:waypoint x="2177" y="165" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="2107" y="147" width="21" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SequenceFlow_196pu94_di" bpmnElement="SequenceFlow_196pu94">
-        <di:waypoint x="2202" y="190" />
-        <di:waypoint x="2202" y="221" />
-        <di:waypoint x="2852" y="221" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SequenceFlow_10vt7tf_di" bpmnElement="SequenceFlow_10vt7tf">
-        <di:waypoint x="2952" y="221" />
-        <di:waypoint x="3632" y="221" />
-        <di:waypoint x="3632" y="190" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SequenceFlow_1yhye2p_di" bpmnElement="SequenceFlow_1yhye2p">
-        <di:waypoint x="1933" y="165" />
-        <di:waypoint x="2005" y="165" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SequenceFlow_009hb6w_di" bpmnElement="SequenceFlow_009hb6w">
-        <di:waypoint x="2030" y="140" />
-        <di:waypoint x="2030" y="-128" />
-        <di:waypoint x="2122" y="-128" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="2011" y="-14" width="8" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SequenceFlow_1cjh7rc_di" bpmnElement="SequenceFlow_1cjh7rc">
-        <di:waypoint x="2222" y="-128" />
-        <di:waypoint x="3392" y="-128" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1kxn5iu_di" bpmnElement="SequenceFlow_1kxn5iu">
         <di:waypoint x="1767" y="165" />
         <di:waypoint x="1833" y="165" />
@@ -413,16 +315,6 @@ Zeitraum</bpmn:text>
         <di:waypoint x="3060" y="570" />
         <di:waypoint x="3178" y="570" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SequenceFlow_0h6mp8h_di" bpmnElement="SequenceFlow_0h6mp8h">
-        <di:waypoint x="2202" y="190" />
-        <di:waypoint x="2202" y="492" />
-        <di:waypoint x="2275" y="492" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SequenceFlow_159k2il_di" bpmnElement="SequenceFlow_159k2il">
-        <di:waypoint x="3528" y="492" />
-        <di:waypoint x="3632" y="492" />
-        <di:waypoint x="3632" y="190" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1xsu2w1_di" bpmnElement="SequenceFlow_1xsu2w1">
         <di:waypoint x="1181" y="272" />
         <di:waypoint x="1386" y="272" />
@@ -430,6 +322,18 @@ Zeitraum</bpmn:text>
       <bpmndi:BPMNEdge id="SequenceFlow_0auwr6q_di" bpmnElement="SequenceFlow_0auwr6q">
         <di:waypoint x="4320" y="272" />
         <di:waypoint x="4583" y="272" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_12v0u76_di" bpmnElement="SequenceFlow_12v0u76">
+        <di:waypoint x="1933" y="165" />
+        <di:waypoint x="2104" y="165" />
+        <di:waypoint x="2104" y="492" />
+        <di:waypoint x="2275" y="492" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_097f9f6_di" bpmnElement="SequenceFlow_097f9f6">
+        <di:waypoint x="3528" y="492" />
+        <di:waypoint x="3856" y="492" />
+        <di:waypoint x="3856" y="165" />
+        <di:waypoint x="4184" y="165" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

@@ -3,11 +3,18 @@
  */
 package ch.sbb.dks.camundapoc.delegate.einheitenberechnung;
 
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
+import ch.sbb.dks.camundapoc.model.Wagenbewegungsblock;
 
 /**
  * @author ue85191 (Markus Loeffler)
@@ -16,15 +23,44 @@ import org.springframework.stereotype.Component;
 public class WagenfaktorDelegate implements JavaDelegate {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WagenfaktorDelegate.class);
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
         LOGGER.info("wagenfaktor delegate");
-        Integer faktorCluster = (Integer) delegateExecution.getVariable("faktorCluster");
-        Integer dauerInMinuten = (Integer) delegateExecution.getVariable("dauerInMinuten");
+
+        Wagenbewegungsblock block = (Wagenbewegungsblock) delegateExecution.getVariable("wagenbewegungsblock");
+
+        String cluster = block.getCluster();
+
+//        Integer faktorCluster = (Integer) delegateExecution.getVariable("faktorCluster");
+        Integer faktorCluster = faktorCluster(cluster);
+        int dauerInMinuten = minutesBetween(block.getStartEvent().getTimestamp(), block.getEndEvent().getTimestamp());
+
+//        Integer dauerInMinuten = (Integer) delegateExecution.getVariable("dauerInMinuten");
 
         Integer einheiten = dauerInMinuten * faktorCluster;
-        delegateExecution.setVariable("einheiten", einheiten);
-
+        block.setEinheiten(einheiten);
+//        delegateExecution.setVariable("einheiten", einheiten);
     }
+
+    int minutesBetween(String fromString, String toString) {
+        LocalDateTime from = LocalDateTime.parse(fromString, formatter);
+        LocalDateTime to = LocalDateTime.parse(toString, formatter);
+
+        int minutes = (int) Duration.between(from, to).toMinutes();
+        return minutes;
+    }
+
+    private Integer faktorCluster(String cluster) {
+        if ("cluster1".equals(cluster)) {
+            return 1;
+        }
+        if ("cluster2".equals(cluster)) {
+            return 2;
+        }
+        return 3;
+    }
+
+
 }

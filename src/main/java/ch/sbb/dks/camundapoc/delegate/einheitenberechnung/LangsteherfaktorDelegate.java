@@ -21,6 +21,10 @@ public class LangsteherfaktorDelegate implements JavaDelegate {
     public void execute(DelegateExecution delegateExecution) throws Exception {
         Integer langsteherfaktor = (Integer) delegateExecution.getVariable("langsteherfaktor");
         LOGGER.info("langsteherfaktor: {}", langsteherfaktor);
+        if (langsteherfaktor == null) {
+            langsteherfaktor = 1;
+            delegateExecution.setVariable("langsteherfaktor", 1);
+        }
 
         Integer einheiten = (Integer) delegateExecution.getVariable("einheiten");
         einheiten *= langsteherfaktor;
