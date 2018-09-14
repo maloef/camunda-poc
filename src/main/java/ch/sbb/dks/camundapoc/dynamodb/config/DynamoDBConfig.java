@@ -14,6 +14,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
 
 import ch.sbb.dks.camundapoc.dynamodb.read.DynamoReader;
+import ch.sbb.dks.camundapoc.dynamodb.write.DynamoWriter;
 
 /**
  * Configuration class for DynamoDB. This class creates a DynamoDBMapper bean which is used to perform CRUD operations. The DynamoDB
@@ -34,6 +35,8 @@ public class DynamoDBConfig {
 
     @Value("${dynamodb.table}")
     private String table;
+
+    private String writeTable = "CargoStoragePreis_Dev";
 
     @Bean
     public DynamoDBMapper getDynamoDBMapper() {
@@ -57,5 +60,12 @@ public class DynamoDBConfig {
         DynamoReader dynamoReader = new DynamoReader(table);
 
         return dynamoReader;
+    }
+
+    @Bean
+    public DynamoWriter getDynamoWriter() {
+        DynamoWriter dynamoWriter = new DynamoWriter(writeTable);
+
+        return dynamoWriter;
     }
 }
